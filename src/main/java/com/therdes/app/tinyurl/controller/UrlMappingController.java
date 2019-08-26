@@ -2,6 +2,7 @@ package com.therdes.app.tinyurl.controller;
 
 import com.therdes.app.tinyurl.service.mapping.UrlMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,9 @@ public class UrlMappingController {
         this.urlMappingService = urlMappingService;
     }
 
+    @Value("${tinyurl.deploy.hostname}")
+    private String deployHostName;
+
     @RequestMapping("/")
     @ResponseBody
     public String index() {
@@ -35,7 +39,7 @@ public class UrlMappingController {
     public String generateShortHash(HttpServletRequest request, @RequestParam(value = "longUrl") String longUrl) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         String originUrl = URLDecoder.decode(longUrl, StandardCharsets.UTF_8.displayName());
         String shortUrl = urlMappingService.encode(originUrl);
-        return request.getScheme() + "://" + request.getRemoteHost() + request.getContextPath() + "/" + shortUrl;
+        return request.getScheme() + "://" + deployHostName + request.getContextPath() + "/" + shortUrl;
     }
 
     @GetMapping("/{shortHash}")

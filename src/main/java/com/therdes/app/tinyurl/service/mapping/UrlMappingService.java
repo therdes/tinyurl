@@ -37,7 +37,7 @@ public class UrlMappingService {
     public String encode(String longUrl) throws NoSuchAlgorithmException {
         List<String> shortUrls = new ArrayList<>();
         byte[] encryptUrl = MessageDigest.getInstance("MD5").digest(longUrl.getBytes(StandardCharsets.UTF_8));
-        String md5HashHexString = new BigInteger(encryptUrl).toString(16);
+        String md5HashHexString = new BigInteger(1, encryptUrl).toString(16);
         if (urlMappingRepository.existsByMd5HashHex(md5HashHexString)) {
             List<UrlMapping> mappings = urlMappingRepository.findByMd5HashHex(md5HashHexString);
             for (UrlMapping mapping : mappings) {
