@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/tiny")
 public class UrlMappingController {
 
     private final UrlMappingService urlMappingService;
@@ -28,7 +28,7 @@ public class UrlMappingController {
     @Value("${tinyurl.deploy.hostname}")
     private String deployHostName;
 
-    @RequestMapping("/")
+    @RequestMapping
     @ResponseBody
     public String index() {
         return "Welcome to use TinyUrl Service!";
